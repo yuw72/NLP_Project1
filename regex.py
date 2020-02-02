@@ -12,7 +12,7 @@ class Regex:
     self.award_dict['best director - motion picture'] = (r'[Bb]est [Dd]irector')
 
     # best performance by an actress in a television series - comedy or musical 
-    self.award_dict['best performance by an actress in a television series - comedy or musical'] = (r'[Bb]est [Pp]erformance .* [Aa]ctress .* [Tt][Vv].* [Mm]usical')
+    self.award_dict['best performance by an actress in a television series - comedy or musical'] = (r'[Bb]est [Pp]erformance .* [Aa]ctress .*([Tt][Vv]|[Tt]elevision).*([Cc]omedy|[Mm]usical')
 
     # best foreign language film 
     self.award_dict['best foreign language film'] = (r'[Ff]oreign [Ll]anguage [Ff]ilm')
