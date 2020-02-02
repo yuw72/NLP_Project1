@@ -93,5 +93,5 @@ class Regex:
     else: 
       return False
 
-reg = Regex()
+# reg = Regex()
 # print(reg.getRegex("best animated feature film"))
