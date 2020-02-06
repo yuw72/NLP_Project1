@@ -107,10 +107,10 @@ class Regex:
 
     self.people_award['best director - motion picture'] = (r'[Bb]est [Dd]irector')
 
-    self.people_award['best performance by an actress in a television series - comedy or musical'] = (r'[Bb]est [Pp]erformance .* [Aa]ctress .* [Tt][Vv].* [Mm]usical')
+    self.people_award['best performance by an actress in a television series - comedy or musical'] = (r'[Bb]est.* [Aa]ctress .*([Tt][Vv]|[Tt]elevision).*([Cc]omedy|[Mm]usical)')
     self.people_award['best performance by an actress in a television series - musical or comedy'] = (r'[Bb]est.* [Aa]ctress .*([Tt][Vv]|[Tt]elevision).*([Cc]omedy|[Mm]usical)')
 
-    self.film_award[' best foreign language film '] = (r'[Ff]oreign [Ll]anguage [Ff]ilm')
+    self.film_award['best foreign language film'] = (r'[Bb]est [Ff]oreign [Ll]anguage [Ff]ilm')
     self.film_award['best motion picture - foreign language'] = (r'[Bb]est.*[Ff]oreign [Ll]anguage')
 
     self.people_award['best performance by an actor in a supporting role in a motion picture'] = (r'([Aa]ct[oe]r.*[Ss]upporting|[Ss]upporting [Aa]ct[oe]r) (in a|in) [Mm]otion')
@@ -119,23 +119,23 @@ class Regex:
     self.people_award['best performance by an actress in a supporting role in a series, mini-series or motion picture made for television'] = (r'([Ss]upporting.*[Aa]ctress.*[Ss]eries|[Aa]ctress.*[Ss]upporting [Rr]ole.*[Ss]eries)')
     self.people_award['best performance by an actress in a supporting role in a series, limited series or motion picture made for television'] = (r'([Ss]upporting.*[Aa]ctress.*[Ss]eries|[Aa]ctress.*[Ss]upporting [Rr]ole.*[Ss]eries)')
 
-    self.film_award['best motion picture - comedy or musical'] = (r'[Bb]est [Mm]otion [Pp]icture .*[Co]medy .* [Mm]usical')
+    self.film_award['best motion picture - comedy or musical'] = (r'[Bb]est [Mm]otion [Pp]icture .*([Cc]omedy|[Mm]usical)')
     self.film_award['best motion picture - musical or comedy'] = (r'[Bb]est [Mm]otion [Pp]icture .*([Cc]omedy|[Mm]usical)')
 
-    self.people_award['best performance by an actress in a motion picture - comedy or musical'] = (r'[Bb]est [Pp]erformance .* [A]ctress [Ii]n [Aa] [Mm]otion [Pp]icture.*[Cc]omedy')
+    self.people_award['best performance by an actress in a motion picture - comedy or musical'] = (r'[Bb]est.* [A]ctress [Ii]n [Aa] [Mm]otion [Pp]icture.*([Cc]omedy|[Mm]usical)')
     self.people_award['best performance by an actress in a motion picture - musical or comedy'] = (r'[Bb]est.* [A]ctress [Ii]n [Aa] [Mm]otion [Pp]icture.*([Cc]omedy|[Mm]usical)')
 
     self.film_award['best mini-series or motion picture made for television'] = (r'[Bb]est [Mm]ini.*[Ss]eries .*[Mm]otion [Pp]icture.*([Tt][Vv]|[Tt]elevision)')
 
     self.film_award['best original score - motion picture'] = (r'[Bb]est [Oo]riginal [Ss]core.*[Mm]otion [Pp]icture')
 
-    self.people_award['best performance by an actress in a television series - drama'] = (r'[Bb]est [Aa]ctress( in a| in)?,? ([Tt][Vv]|[Tt]elevision).*[Dd]rama')
+    self.people_award['best performance by an actress in a television series - drama'] = (r'[Bb]est.*[Aa]ctress( in a| in)?,? ([Tt][Vv]|[Tt]elevision).*[Dd]rama')
 
-    self.people_award['best performance by an actress in a motion picture - drama'] = (r'[Bb]est [Aa]ctress.*[Mm]otion [Pp]icture.*[Dd]rama')
+    self.people_award['best performance by an actress in a motion picture - drama'] = (r'[Bb]est.*[Aa]ctress.*[Mm]otion [Pp]icture.*[Dd]rama')
 
     self.people_award['cecil b. demille award'] = (r'[Cc]ecil.*[Dd]emille')
 
-    self.people_award['best performance by an actor in a motion picture - comedy or musical'] = (r'[Bb]est [Pp]erformance .* [Aa]ct[oe]r.* [Mm]otion [Pp]icture.*[Cc]omedy')
+    self.people_award['best performance by an actor in a motion picture - comedy or musical'] = (r'[Bb]est.* [Aa]ct[oe]r.* [Mm]otion [Pp]icture.*([Cc]omedy|[Mm]usical)')
     self.people_award['best performance by an actor in a motion picture - musical or comedy'] = (r'[Bb]est.* [Aa]ct[oe]r.* [Mm]otion [Pp]icture.*([Cc]omedy|[Mm]usical)')
 
     self.people_award['best performance by an actor in a supporting role in a series, mini-series or motion picture made for television'] = (r'[Ss]upporting.*[Aa]ct[oe]r.*[Mm]ini')
@@ -164,12 +164,12 @@ class Regex:
     
     
 
-    self.film_award['best television series - comedy or musical'] = (r'[Bb]est ([Tt][Vv]|[Tt]elevision).*[Cc]omedy')
+    self.film_award['best television series - comedy or musical'] = (r'[Bb]est ([Tt][Vv]|[Tt]elevision).*([Cc]omedy|[Mm]usical)')
     self.film_award['best television series - musical or comedy'] = (r'[Bb]est ([Tt][Vv]|[Tt]elevision).*([Cc]omedy|[Mm]usical)')
 
     self.people_award['best performance by an actor in a television series - drama'] = (r'[Bb]est [Aa]ct[oe]r( in a| in)?,? ([Tt][Vv]|[Tt]elevision).*[Dd]rama')
 
-    self.people_award['best performance by an actor in a television series - comedy or musical'] = (r'[Bb]est [Aa]ct[oe]r( in a| in)?,? ([Tt][Vv]|[Tt]elevision).*[Cc]omedy')
+    self.people_award['best performance by an actor in a television series - comedy or musical'] = (r'[Bb]est [Aa]ct[oe]r( in a| in)?,? ([Tt][Vv]|[Tt]elevision).*([Cc]omedy|[Mm]usical)')
     self.people_award['best performance by an actor in a television series - musical or comedy'] = (r'[Bb]est [Aa]ct[oe]r( in a| in)?,? ([Tt][Vv]|[Tt]elevision).*([Cc]omedy|[Mm]usical)')
 
     
