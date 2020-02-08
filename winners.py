@@ -95,12 +95,12 @@ def get_names(text,nlp):
 import re
 import regex
 from collections import Counter
-def get_people_winner(tweets):
+def get_people_winner(tweets,award_names):
     nlp = spacy.load('en')
     stop_words = set(stopwords.words('english')) 
     reg = regex.Regex()
     results={}
-    for movie in reg.award_names:
+    for movie in award_names:
     #     print(movie)
         if movie in reg.people_award:
     #         if movie != 'best performance by an actor in a supporting role in a motion picture':
@@ -145,11 +145,11 @@ def validate_film(film_name):
             return True
     return False
 
-def get_film_winner(tweets):
+def get_film_winner(tweets,award_names):
     reg = regex.Regex()
     # print(reg.film_award)
     results={}
-    for movie in reg.award_names:
+    for movie in award_names:
     #     print(movie)
         if movie in reg.film_award:
     #         if movie != 'best original song - motion picture':
@@ -204,8 +204,8 @@ def get_film_winner(tweets):
     # for key in results.keys():
     #     print(key,results[key])
     # Counter(result).most_common()
-tweets = json.load(open("gg2013.json"))
-winner1 = get_film_winner(tweets)
-winner2 = get_people_winner(tweets)
-winner1.update(winner2)
-print(len(winner1))
+# tweets = json.load(open("gg2013.json"))
+# winner1 = get_film_winner(tweets)
+# winner2 = get_people_winner(tweets)
+# winner1.update(winner2)
+# print(len(winner1))
