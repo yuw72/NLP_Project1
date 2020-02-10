@@ -29,34 +29,22 @@ def get_presenters(file):
     award_results = {}
     for x in clean_data:
         tweet = x["text"]
-        screenname = x["user"]["screen_name"]
         for award_regex in awards:
             award = get_key(award_dict, award_regex)
             for search_term in search_terms:
                 if re.search(search_term, tweet) and not re.search(stop_terms[0], tweet) and re.search(award_regex, tweet):
-                #print(screenname)
-                #if tweet.find(search_term) != -1 and tweet.find(stop_terms[0]) == -1:
-                #if fuzz.WRatio(search_term, tweet) >= 85 or fuzz.partial_ratio(search_term, tweet) >= 90:
-    #                 print(award)
-#                     print(tweet)
                     if award_results.get(award):
                         award_results[award].append(x['text'])
-    #                     print(award_results)
                     else:
                         award_results[award] = [x['text']]
-    #                     print(award_results)
-    #                 print()
                     break
     gg_stop_words = ['Globe', 'RT', 'http', 'Golden', 'Globes', 'GoldenGlobes', 'Goldenglobes', 'Goldenglobe', 'gg','golden globes', 'golden globe', 'goldenglobe','goldenglobes','gg2015','gg15','goldenglobe2015','goldenglobe15','goldenglobes2015','goldenglobes15', 'gg2013','gg13','goldenglobe2013','goldenglobe13','goldenglobes2013','goldenglobes13', 'rt', '2013', '2015', 'Best', 'BEST', 'Present', 'Presents', 'Angeles']
     final = {}
     proper = []
     for award in award_results.keys():
-#         print(award)
         final[award] = []
-        # for single tokens: proper = []
         proper_bi = []
         for tweet in award_results[award]:
-#             print(tweet)
             bigrams = list(nltk.bigrams(nltk.word_tokenize(tweet)))
             text = nltk.word_tokenize(tweet)
             tagged_text = nltk.pos_tag(text)

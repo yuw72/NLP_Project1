@@ -31,9 +31,7 @@ def merge_awards(results):
                 B.remove(b)
                 has_merge = True
         if not has_merge:
-            C.append(a)
-            
-                
+            C.append(a)          
     for b in B:
         C.append(b)
         
@@ -211,7 +209,8 @@ def get_allAwards(tweets,year):
                     continue
                 award_names.append(extract_str)
     results = Counter(award_names).most_common()   
-    results = merge_awards(results)
+
+    results = merge_awards(results[:200])
     # results = Counter(results).most_common() 
     results = sorted(results, key = lambda x: x[1],reverse = True)
     results = filter_awards(results)
@@ -221,11 +220,11 @@ def get_allAwards(tweets,year):
     for i in range(len(results)):
         if i>=26:
             break
-        res = results[0]
+        res = results[i]
         answers.append(res[0])
     return answers
 
 # import json
-# tweets = json.load(open("gg2013.json"))
-# results = get_allAwards(tweets)
+# tweets = json.load(open("gg2015.json"))
+# results = get_allAwards(tweets,2015)
 # print(results)
