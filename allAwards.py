@@ -224,7 +224,7 @@ def get_allAwards(tweets,year):
         answers.append(res[0])
     return answers
 
-import json
-tweets = json.load(open("gg2015.json"))
-results = get_allAwards(tweets,2015)
-print(results)
+# import json
+# tweets = json.load(open("gg2015.json"))
+# results = get_allAwards(tweets,2015)
+# print(results)
