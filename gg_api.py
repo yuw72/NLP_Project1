@@ -3,8 +3,8 @@ import json
 import os
 import winners as win
 import Presenters as pres
-import Nominees as noms
-import allAwards
+# import Nominees as noms
+# import allAwards
 import host
 
 
@@ -125,10 +125,10 @@ def main():
     tweets = json.load(open(filename))
     
     # print human-readeable form
-    print("hosts: ",end='')
+    print("Hosts: ",end='')
     hosts = get_hosts(year)
     for host in hosts:
-        print(host,end=", ")
+        print(host.title(),end=", ")
     print()
 
     presenters_dict = get_presenters(year)
