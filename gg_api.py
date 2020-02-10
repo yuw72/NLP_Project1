@@ -32,9 +32,9 @@ def get_awards(year):
         award_names = OFFICIAL_AWARDS_1819
     filename = 'gg'+year+'.json'
     tweets = json.load(open(filename))
-    awards = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
-    awards[1] = "hahahahah"
-    # awards = allAwards.get_allAwards(tweets,year)
+    # awards = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
+    # awards[1] = "hahahahah"
+    awards = allAwards.get_allAwards(tweets,year)
     # print('awards length: ',len(awards))
     # print('answer length: ',len(OFFICIAL_AWARDS_1315))
     return awards
@@ -55,7 +55,8 @@ def get_nominees(year):
 
     global tweets
     filename = 'gg'+year+'.json'
-    nominees = noms.get_nominees(filename)
+    tweets = json.load(open(filename))
+    nominees = noms.get_nominees(tweets, award_names)
 
     return nominees
 
@@ -93,8 +94,8 @@ def get_presenters(year):
 
     global tweets
     filename = 'gg'+year+'.json'
-    
-    presenters = pres.get_presenters(filename)
+    tweets = json.load(open(filename))
+    presenters = pres.get_presenters(tweets)
     # print("winners:",winners)
     return presenters
 
