@@ -15,3 +15,4 @@ To see human readable format, run `python gg_api.py <year>` with the year of you
 
 ## Execution Time
 On Lexi's laptop, the autograder runs in 1:30 for 2013 and 5:00 for 2015 without the red carpet information.
+Note: red carpet is not fully optimized. For best results on gg_api, use a smaller dataset or comment out the red carpet section.
