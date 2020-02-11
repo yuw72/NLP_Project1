@@ -9,7 +9,9 @@ This program generates a list of presenters, hosts, nominees, awards, and winner
 The program outputs this information in two ways: a human-readable format and a json. The json does not use our self-generated awards, but the given awards. The awards we generated can be seen in the human-readable output.
 
 ## Usage
-run `pip install -r requirements.txt`
+Run `pip install -r requirements.txt`
+
+Install `python -m spacy download en_core_web_sm`
 
 To see human readable format, run `python gg_api.py <year>` with the year of your data. The results will be printed to standard output (including red carpet) and to a .txt file "HumanRead.txt" (excluding red carpet).
 
