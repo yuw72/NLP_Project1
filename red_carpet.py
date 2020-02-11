@@ -56,13 +56,12 @@ def get_names(text):
     return names
 
 def best_dressed(tweets):
-    pos_words = ['beautiful', "ravishing", 'very beautiful', 'gorgeous', 'stunning',
-                 'attractive', 'pretty', 'handsome', 'good-looking', 'good looking',
-                 'alluring', 'prepossessing', 'lovely', 'charming', 'delightful', 'appealing', 
-                 'engaging', 'winsome', 'ravishing', 'gorgeous', 'stunning', 'arresting', 'glamorous', 
-                 'bewitching', 'beguiling', 'graceful', 'elegant', 'exquisite', 'aesthetic', 'artistic',
-                 'cute', 'photogenic', 'telegenic', 'sexy', 'seductive', 'alluring', 'tantalizing',
-                 'irresistible', 'desirable']
+    pos_words = ['beautiful', "ravishing", 'gorgeous', 'stunning',
+                 'attractive', 'pretty', 'handsome', 'good',
+                 'prepossessing', 'lovely',  
+                 'ravishing', 'glamorous', 
+                 'elegant', 'exquisite',
+                 'cute', 'photogenic', 'sexy']
     positive_sent = []
     for t in tweets:
         if bool([ele for ele in pos_words if(ele in t)]):
@@ -84,11 +83,7 @@ def best_dressed(tweets):
 
 def worst_dressed(tweets):
     
-    neg_words = ['bad', 'ugly', 'worst', 'awful', 'horrible', 'hate', 'suck', 'sucks', 'sucked', 'disappointing',
-                'unattractive', 'unappealing', 'unpleasant', 'hideous', 'unlovely', 'unprepossessing', 
-                 'unsightly', 'horrible', 'frightful', 'awful', 'ghastly', 'vile', 'revolting', 'repellent', 
-                 'repulsive', 'repugnant', 'grotesque', 'disgusting', 'monstrous', 'reptilian', 'misshapen', 
-                 'deformed', 'disfigured', 'homely', 'plain', 'not much to look at']
+    neg_words = ['bad', 'worst', 'awful', 'horrible', 'suck', 'poor']
     neg_sent = []
     for t in tweets:
         if bool([ele for ele in neg_words if(ele in t)]):
@@ -131,4 +126,10 @@ def most_discussed(tweets):
     winner = max(count.items(), key=operator.itemgetter(1))[0]
     return winner
 
+def results(tweets):
+    b = best_dressed(tweets)
+    w = worst_dressed(tweets)
+    c = most_controversial(b, w)
+    m = most_discussed(tweets)
+    return b, w, c, m
 
