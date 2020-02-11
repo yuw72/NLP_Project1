@@ -16,7 +16,7 @@ def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
-    print("get hosts")
+#     print("get hosts")
     filename = 'gg'+year+'.json'
     tweets = json.load(open(filename))
     hosts = host.get_hosts(tweets)
@@ -26,7 +26,7 @@ def get_awards(year):
     '''Awards is a list of strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
-    print("get awards")
+#     print("get awards")
     awards = []
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
@@ -46,7 +46,7 @@ def get_nominees(year):
     names as keys, and each entry a list of strings. Do NOT change
     the name of this function or what it returns.'''
     # Your code here
-    print("get nominees")
+#     print("get nominees")
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
     else:
@@ -61,7 +61,7 @@ def get_nominees(year):
     filename = 'gg'+year+'.json'
     tweets = json.load(open(filename))
     winners = get_winner(year)
-    print("finish winners")
+#     print("finish winners")
     nominees = noms.get_nominees(tweets, award_names, winners)
     return nominees
 
@@ -71,7 +71,7 @@ def get_winner(year):
     Do NOT change the name of this function or what it returns.'''
     # Your code here
     global winners
-    print("get winners")
+#     print("get winners")
 
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
@@ -92,7 +92,7 @@ def get_presenters(year):
     names as keys, and each entry a list of strings. Do NOT change the
     name of this function or what it returns.'''
     # Your code here
-    print("get presenters")
+#     print("get presenters")
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
     else:
