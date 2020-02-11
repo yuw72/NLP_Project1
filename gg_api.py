@@ -141,50 +141,59 @@ def main():
     what it returns.'''
     # Your code here
     # print("run main")
-    year = '2015'
-    # if year == '2013' or year == '2015':
-    #     award_names = OFFICIAL_AWARDS_1315
-    # else:
-    #     award_names = OFFICIAL_AWARDS_1819
+    year = '2013'
+    if year == '2013' or year == '2015':
+        award_names = OFFICIAL_AWARDS_1315
+    else:
+        award_names = OFFICIAL_AWARDS_1819
     
-    # filename = 'gg'+year+'.json'
-    # tweets = json.load(open(filename))
+    filename = 'gg'+year+'.json'
+    tweets = json.load(open(filename))
     
-    # # print human-readeable form
-    # print()
-    # print("Hosts: ",end='')
-    # hosts = get_hosts(year)
-    # for host in hosts:
-    #     print(host.title(),end=", ")
-    # print()
+    # print human-readeable form
+    print()
+    print("Hosts: ",end='')
+    hosts = get_hosts(year)
+    for host in hosts:
+        print(host.title(),end=", ")
+    print()
 
-    # presenters_dict = get_presenters(year)
-    # # nominees_dict = get_nominees(year)
-    # winners_dict = get_winner(year)
-    # for award in award_names:
-    #     print("\nAward: ",award.title())
-    #     presenters = presenters_dict[award]
-    #     print("presenters: ",end="")
-    #     for p in presenters:
-    #         print(p.title() ,end=", ")
+    presenters_dict = get_presenters(year)
+    # nominees_dict = get_nominees(year)
+    winners_dict = get_winner(year)
+    for award in award_names:
+        print("\nAward: ",award.title())
+        presenters = presenters_dict[award]
+        print("presenters: ",end="")
+        for p in presenters:
+            print(p.title() ,end=", ")
 
-    #     # nominees = nominees_dict[award]
-    #     print("\nNominees: ",end="")
-    #     # for n in nominees:
-    #     #     print(n.titie() ,end=", ")
+        # nominees = nominees_dict[award]
+        print("\nNominees: ",end="")
+        # for n in nominees:
+        #     print(n.titie() ,end=", ")
 
-    #     print("\nWinner: ", winners_dict[award])
+        print("\nWinner: ", winners_dict[award])
 
     best, worst, controversial, most_discussion = get_redcarpet(year)
     print('Best dressed: ')
     for n in best:
         print(n, end = ', ')
-    print('Worst dressed: ', worst)
+    print('\n')
+    print('Worst dressed: ')
+    for n in worst:
+        print(n, end = ', ')
+    print('\n')
     if len(controversial) == 0:
-        print('Not much controversy')
+        print('Not much controversy.')
     else:
-        print('Most controversial: ', controversial)
-    print('Most discussed: ', most_discussion)
+        print('Most controversial: ')
+        for n in controversial:
+            print(n, end = ', ')
+    print('\n')
+    print('Most discussed: ')
+    print(n)
+    print('\n')
     
     #json format
 
