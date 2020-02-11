@@ -3,9 +3,10 @@ import json
 import os
 import winners as win
 import Presenters as pres
-# import Nominees as noms
+import Nominees as noms
 import allAwards
 import host
+import sys
 from red_carpet import *
 
 OFFICIAL_AWARDS_1315 = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
@@ -136,7 +137,10 @@ def main():
     what it returns.'''
     # Your code here
     # print("run main")
-    year = '2013'
+    f = open("HumanRead.txt", "w")
+    for arg in sys.argv[1:]:
+        year = arg
+    
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
     else:
@@ -146,35 +150,52 @@ def main():
     tweets = json.load(open(filename))
     
     # print human-readeable form
-    print()
+    f.write("Hosts: ")
     print("Hosts: ",end='')
     hosts = get_hosts(year)
     for host in hosts:
+        f.write(host.title())
+        f.write(",")
         print(host.title(),end=", ")
     print()
-    
+    f.write("\n")
+
+    f.write("generated awards: ")
     print("generated awards: ",end='')
     awards = get_awards(year)
     for award in awards:
+        f.write(award)
+        f.write(",")
         print(award,end=", ")
     print()
-    
+    f.write("\n")
     presenters_dict = get_presenters(year)
-    # nominees_dict = get_nominees(year)
+    nominees_dict = get_nominees(year)
     winners_dict = get_winner(year)
     for award in award_names:
+        f.write("\nAward: ")
+        f.write(award.title())
         print("\nAward: ",award.title())
         presenters = presenters_dict[award]
-        print("presenters: ",end="")
+        f.write("\nPresenters: ")
+        print("\nPresenters: ",end="")
         for p in presenters:
+            f.write(p)
+            f.write(",")
             print(p.title() ,end=", ")
 
-        # nominees = nominees_dict[award]
+        nominees = nominees_dict[award]
+        f.write("\nNominees: ")
         print("\nNominees: ",end="")
-        # for n in nominees:
-        #     print(n.titie() ,end=", ")
-
+        for n in nominees:
+            f.write(n.title())
+            f.write(",")
+            print(n.title() ,end=", ")
+        f.write("\nWinner: ")
+        f.write(winners_dict[award])
         print("\nWinner: ", winners_dict[award])
+    f.write("\n")
+    f.close()
 
     best, worst, controversial, most_discussion = get_redcarpet(year)
     print('Best dressed: ')
@@ -197,20 +218,23 @@ def main():
     print('\n')
     
     #json format
+    f = open("JsonFormat.txt", "w")
+    result = {}
+    result['host'] = hosts
+    award_dict={}
+    for award in award_names:
+        title_dict = {}
+        title_dict['presenters'] = presenters_dict[award]
+        title_dict['nominees'] = nominees_dict[award]
+        title_dict['winner'] = winners_dict[award]
+        award_dict[award] = title_dict
+    result['award_data'] = award_dict
+     # for key in award_dict.keys():
+     #     title_dict = {}
+    print(result)
+    f.write(str(dict))
+    f.close()
 
-    # result = {}
-    # result['host'] = hosts
-    # award_dict={}
-    # for award in award_names:
-    #     title_dict = {}
-    #     title_dict['presenters'] = presenters_dict[award]
-    #     title_dict['nominees'] = nominees_dict[award]
-    #     title_dict['winner'] = winners_dict[award]
-    #     award_dict[award] = title_dict
-    # result['award_data'] = award_dict
-    # # for key in award_dict.keys():
-    # #     title_dict = {}
-    # print(result)
     return
 
 if __name__ == '__main__':
