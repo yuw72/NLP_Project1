@@ -23,10 +23,6 @@ def get_key(my_dict, val):
          if val == value: 
              return key
         
-def get_winner(movie):
-    # TODO: make a real version of this
-    answers = json.load(open("gg2013answers.json"))
-    return answers["award_data"][movie]["winner"]
 
 def leven(str1, str2):
     Distance = lev.distance(str1.lower(), str2.lower())
@@ -50,13 +46,86 @@ def isMovie(movie):
             return str2
     return False
 
-def get_nominees(file):
-    tweets = json.load(open(file))
+def get_film_nominee(tweets, award_names, winners):
+    reg = regex.Regex()
+    # print(reg.film_award)
+    results={}
+    for movie in award_names:
+    #     print(movie)
+        if movie in reg.film_award:
+    #         movie = ' best original song - motion picture '
+            search_term = winners[movie]
+            # search_term = reg.getRegex(movie)
+            
+            word_size = 2
+    #         print(search_term)
+            result = []
+            for tweet in tweets:
+                text = tweet['text'].lower()
+                if 'RT' not in tweet['text']:
+                    if re.search(search_term, text):
+                        text = text.replace(',', "")
+                        text = text.replace('.', "")
+                        text = text.replace('!', "")
+                        #text.translate(str.maketrans('', '', string.punctuation))
+                        #                     print(text)
+                        A = re.findall(r'“(.*?)”', text)
+                        B = re.findall(r'"(.*?)"', text)
+                            
+                        if len(A)!=0:
+                            for sentence in A:
+                                if len(sentence.split())<10:
+                                    if search_term not in sentence and '@' not in sentence and '#' not in sentence and 'best' not in sentence and sentence != '':
+                                        result.append(sentence)
+    #                                     movie_title = isMovie(sentence)
+    #                                     if movie_title:
+    #                                         result.append(movie_title)
+                        if len(B)!=0:
+                            for sentence in B:
+                                if len(sentence.split())<10:
+                                    if search_term not in sentence and '@' not in sentence and '#' not in sentence and 'best' not in sentence and sentence != '':
+                                        result.append(sentence)
+    #                                     movie_title = isMovie(sentence)
+    #                                     if movie_title:
+    #                                         result.append(movie_title)
+            
+            
+            if len(result)==0:
+                for tweet in tweets:
+                    text = tweet['text']
+                    if 'RT' not in tweet['text']:
+                        if re.search(search_term, text):
+                                C = re.findall(r'-(.*?)-', text)
+                                if len(C)!=0:
+    #                                 print(text)
+                                    for sentence in C:
+                                        if len(sentence.split())<5:
+                                            if search_term not in sentence and '@' not in sentence and '#' not in sentence:
+                                                result.append(sentence)
+
+            cnt = 0
+            idx = 0
+            answer = []
+            while cnt<4 and idx<len(result):
+                movie_title = isMovie(result[idx])
+                
+                if movie_title:
+    #                 print(movie_title)
+                    answer.append(movie_title)
+                    cnt += 1
+                idx += 1
+            for i in range(cnt,4):
+                answer.append('a')
+
+            results[movie] = answer
+    return results
+
+def get_people_nominee(tweets, award_names, winners):
     reg = regex.Regex()
     results={}
-    for movie in reg.award_names:
+    for movie in award_names:
         if movie in reg.people_award:
-            search_term = get_winner(movie)
+            search_term = winners[movie]
 
             word_size = 2
             result = []
@@ -102,8 +171,16 @@ def get_nominees(file):
             for i in range(1,5):
                 if len(most_common) > i:
                     results[movie].append(most_common[i][0])
-            for award in reg.award_dict.keys():
-                if not award in results:
-                    results[award] = ["a", "e", "i", "o", "u"]
                     
-    return(results)
+    return results
+
+def get_nominees(tweets, award_names, winners):
+    nominees1 = get_film_nominee(tweets, award_names, winners)
+    nominees2 = get_people_nominee(tweets, award_names, winners)
+    nominees1.update(nominees2)
+    return nominees1
+
+# tweets = json.load(open("gg2013.json"))
+# award_names = OFFICIAL_AWARDS_1315 = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
+# nominees = get_nominees(tweets, award_names)
+# print(nominees)

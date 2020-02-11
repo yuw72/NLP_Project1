@@ -11,11 +11,13 @@ from red_carpet import *
 OFFICIAL_AWARDS_1315 = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
 OFFICIAL_AWARDS_1819 = ['best motion picture - drama', 'best motion picture - musical or comedy', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best performance by an actress in a motion picture - musical or comedy', 'best performance by an actor in a motion picture - musical or comedy', 'best performance by an actress in a supporting role in any motion picture', 'best performance by an actor in a supporting role in any motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best motion picture - animated', 'best motion picture - foreign language', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best television series - musical or comedy', 'best television limited series or motion picture made for television', 'best performance by an actress in a limited series or a motion picture made for television', 'best performance by an actor in a limited series or a motion picture made for television', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best performance by an actress in a television series - musical or comedy', 'best performance by an actor in a television series - musical or comedy', 'best performance by an actress in a supporting role in a series, limited series or motion picture made for television', 'best performance by an actor in a supporting role in a series, limited series or motion picture made for television', 'cecil b. demille award']
 tweets = []
-winners = []
+winners = {}
+winner_has_run = False
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
+    print("get hosts")
     filename = 'gg'+year+'.json'
     tweets = json.load(open(filename))
     hosts = host.get_hosts(tweets)
@@ -25,6 +27,7 @@ def get_awards(year):
     '''Awards is a list of strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
+    print("get awards")
     awards = []
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
@@ -32,9 +35,9 @@ def get_awards(year):
         award_names = OFFICIAL_AWARDS_1819
     filename = 'gg'+year+'.json'
     tweets = json.load(open(filename))
-    awards = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
-    awards[1] = "hahahahah"
-    # awards = allAwards.get_allAwards(tweets,year)
+    # awards = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
+    # awards[1] = "hahahahah"
+    awards = allAwards.get_allAwards(tweets,year)
     # print('awards length: ',len(awards))
     # print('answer length: ',len(OFFICIAL_AWARDS_1315))
     return awards
@@ -44,6 +47,7 @@ def get_nominees(year):
     names as keys, and each entry a list of strings. Do NOT change
     the name of this function or what it returns.'''
     # Your code here
+    print("get nominees")
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
     else:
@@ -54,9 +58,13 @@ def get_nominees(year):
 #         nominees[name] = 'a'
 
     global tweets
+    global winner_has_run
     filename = 'gg'+year+'.json'
-    nominees = noms.get_nominees(filename)
-
+    tweets = json.load(open(filename))
+    winners = get_winner(year)
+    print("finish winners")
+    nominees = noms.get_nominees(tweets, award_names, winners)
+    winner_has_run = True
     return nominees
 
 def get_winner(year):
@@ -64,6 +72,11 @@ def get_winner(year):
     names as keys, and each entry containing a single string.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
+    global winners
+    print("get winners")
+    if winner_has_run:
+        return winners
+
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
     else:
@@ -75,7 +88,7 @@ def get_winner(year):
     winner1 = win.get_film_winner(tweets, award_names)
     winner2 = win.get_people_winner(tweets, award_names)
     winner1.update(winner2)
-    global winners
+    
     winners = winner1
     return winner1
 
@@ -84,7 +97,7 @@ def get_presenters(year):
     names as keys, and each entry a list of strings. Do NOT change the
     name of this function or what it returns.'''
     # Your code here
-    
+    print("get presenters")
     if year == '2013' or year == '2015':
         award_names = OFFICIAL_AWARDS_1315
     else:
@@ -93,9 +106,10 @@ def get_presenters(year):
 
     global tweets
     filename = 'gg'+year+'.json'
-    
-    presenters = pres.get_presenters(filename)
+    tweets = json.load(open(filename))
+    presenters = pres.get_presenters(tweets)
     # print("winners:",winners)
+    winner_has_run = False
     return presenters
 
 def get_redcarpet(year):
