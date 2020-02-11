@@ -23,10 +23,6 @@ def get_key(my_dict, val):
          if val == value: 
              return key
         
-def get_winner(movie):
-    # TODO: make a real version of this
-    answers = json.load(open("gg2013answers.json"))
-    return answers["award_data"][movie]["winner"]
 
 def leven(str1, str2):
     Distance = lev.distance(str1.lower(), str2.lower())
@@ -50,7 +46,7 @@ def isMovie(movie):
             return str2
     return False
 
-def get_film_nominee(tweets, award_names):
+def get_film_nominee(tweets, award_names, winners):
     reg = regex.Regex()
     # print(reg.film_award)
     results={}
@@ -58,7 +54,7 @@ def get_film_nominee(tweets, award_names):
     #     print(movie)
         if movie in reg.film_award:
     #         movie = ' best original song - motion picture '
-            search_term = get_winner(movie)
+            search_term = winners[movie]
             # search_term = reg.getRegex(movie)
             
             word_size = 2
@@ -124,12 +120,12 @@ def get_film_nominee(tweets, award_names):
             results[movie] = answer
     return results
 
-def get_people_nominee(tweets, award_names):
+def get_people_nominee(tweets, award_names, winners):
     reg = regex.Regex()
     results={}
     for movie in award_names:
         if movie in reg.people_award:
-            search_term = get_winner(movie)
+            search_term = winners[movie]
 
             word_size = 2
             result = []
@@ -178,13 +174,13 @@ def get_people_nominee(tweets, award_names):
                     
     return results
 
-def get_nominees(tweets, award_names):
-    nominees1 = get_film_nominee(tweets, award_names)
-    nominees2 = get_people_nominee(tweets, award_names)
+def get_nominees(tweets, award_names, winners):
+    nominees1 = get_film_nominee(tweets, award_names, winners)
+    nominees2 = get_people_nominee(tweets, award_names, winners)
     nominees1.update(nominees2)
     return nominees1
 
-tweets = json.load(open("gg2013.json"))
-award_names = OFFICIAL_AWARDS_1315 = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
-nominees = get_nominees(tweets, award_names)
-print(nominees)
+# tweets = json.load(open("gg2013.json"))
+# award_names = OFFICIAL_AWARDS_1315 = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
+# nominees = get_nominees(tweets, award_names)
+# print(nominees)

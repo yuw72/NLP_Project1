@@ -14,16 +14,14 @@ def get_key(my_dict, val):
          if val == value: 
              return key
 
-def get_presenters(file):
-    
-    data = json.load(open(file))
+def get_presenters(tweets):
     search_terms = [r'[Pp]resent']
     stop_terms = [r'[Rr]epresent']
     award_dict = reg = regex.Regex().award_dict
     gg_stop_words = ['Globe', 'RT', 'http', 'Golden', 'Globes', 'GoldenGlobes', 'Goldenglobes', 'Goldenglobe', 'gg','golden globes', 'golden globe', 'goldenglobe','goldenglobes','gg2015','gg15','goldenglobe2015','goldenglobe15','goldenglobes2015','goldenglobes15', 'gg2013','gg13','goldenglobe2013','goldenglobe13','goldenglobes2013','goldenglobes13', 'rt', '2013', '2015']
     awards = list(award_dict.values())
     clean_data = []
-    for x in data:
+    for x in tweets:
         if 'RT' not in x['text']:
             clean_data.append(x)
     award_results = {}
