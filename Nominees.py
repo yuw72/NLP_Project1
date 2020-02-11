@@ -52,6 +52,7 @@ def get_film_nominee(tweets, award_names, winners):
     results={}
     for movie in award_names:
     #     print(movie)
+        cnt = 0
         if movie in reg.film_award:
     #         movie = ' best original song - motion picture '
             search_term = winners[movie]
@@ -61,6 +62,9 @@ def get_film_nominee(tweets, award_names, winners):
     #         print(search_term)
             result = []
             for tweet in tweets:
+                if cnt>500000:
+                    break
+                cnt += 1
                 text = tweet['text'].lower()
                 if 'RT' not in tweet['text']:
                     if re.search(search_term, text):
@@ -176,7 +180,9 @@ def get_people_nominee(tweets, award_names, winners):
 
 def get_nominees(tweets, award_names, winners):
     nominees1 = get_film_nominee(tweets, award_names, winners)
+    # print("finish getting film nominees")
     nominees2 = get_people_nominee(tweets, award_names, winners)
+    # print("finish getting people nominees")
     nominees1.update(nominees2)
     return nominees1
 
