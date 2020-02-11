@@ -4,9 +4,9 @@ import os
 import winners as win
 import Presenters as pres
 # import Nominees as noms
-# import allAwards
+import allAwards
 import host
-
+from red_carpet import *
 
 OFFICIAL_AWARDS_1315 = ['cecil b. demille award', 'best motion picture - drama', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best motion picture - comedy or musical', 'best performance by an actress in a motion picture - comedy or musical', 'best performance by an actor in a motion picture - comedy or musical', 'best animated feature film', 'best foreign language film', 'best performance by an actress in a supporting role in a motion picture', 'best performance by an actor in a supporting role in a motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best television series - comedy or musical', 'best performance by an actress in a television series - comedy or musical', 'best performance by an actor in a television series - comedy or musical', 'best mini-series or motion picture made for television', 'best performance by an actress in a mini-series or motion picture made for television', 'best performance by an actor in a mini-series or motion picture made for television', 'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
 OFFICIAL_AWARDS_1819 = ['best motion picture - drama', 'best motion picture - musical or comedy', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best performance by an actress in a motion picture - musical or comedy', 'best performance by an actor in a motion picture - musical or comedy', 'best performance by an actress in a supporting role in any motion picture', 'best performance by an actor in a supporting role in any motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best motion picture - animated', 'best motion picture - foreign language', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best television series - musical or comedy', 'best television limited series or motion picture made for television', 'best performance by an actress in a limited series or a motion picture made for television', 'best performance by an actor in a limited series or a motion picture made for television', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best performance by an actress in a television series - musical or comedy', 'best performance by an actor in a television series - musical or comedy', 'best performance by an actress in a supporting role in a series, limited series or motion picture made for television', 'best performance by an actor in a supporting role in a series, limited series or motion picture made for television', 'cecil b. demille award']
@@ -98,6 +98,18 @@ def get_presenters(year):
     # print("winners:",winners)
     return presenters
 
+def get_redcarpet(year):
+    filename = 'gg'+year+'.json'
+    tweets = json.load(open(filename))
+
+    rc_tweets = parse_tweets_rc(tweets)
+    best = best_dressed(rc_tweets)
+    worst = worst_dressed(rc_tweets)
+    controversial = most_controversial(best, worst)
+    most_discussion = most_discussed(rc_tweets)
+
+    return best, worst, controversial, most_discussion
+
 def pre_ceremony():
     '''This function loads/fetches/processes any data your program
     will use, and stores that data in your DB or in a json, csv, or
@@ -115,54 +127,66 @@ def main():
     what it returns.'''
     # Your code here
     # print("run main")
-    year = '2013'
-    if year == '2013' or year == '2015':
-        award_names = OFFICIAL_AWARDS_1315
+    year = '2015'
+    # if year == '2013' or year == '2015':
+    #     award_names = OFFICIAL_AWARDS_1315
+    # else:
+    #     award_names = OFFICIAL_AWARDS_1819
+    
+    # filename = 'gg'+year+'.json'
+    # tweets = json.load(open(filename))
+    
+    # # print human-readeable form
+    # print()
+    # print("Hosts: ",end='')
+    # hosts = get_hosts(year)
+    # for host in hosts:
+    #     print(host.title(),end=", ")
+    # print()
+
+    # presenters_dict = get_presenters(year)
+    # # nominees_dict = get_nominees(year)
+    # winners_dict = get_winner(year)
+    # for award in award_names:
+    #     print("\nAward: ",award.title())
+    #     presenters = presenters_dict[award]
+    #     print("presenters: ",end="")
+    #     for p in presenters:
+    #         print(p.title() ,end=", ")
+
+    #     # nominees = nominees_dict[award]
+    #     print("\nNominees: ",end="")
+    #     # for n in nominees:
+    #     #     print(n.titie() ,end=", ")
+
+    #     print("\nWinner: ", winners_dict[award])
+
+    best, worst, controversial, most_discussion = get_redcarpet(year)
+    print('Best dressed: ')
+    for n in best:
+        print(n, end = ', ')
+    print('Worst dressed: ', worst)
+    if len(controversial) == 0:
+        print('Not much controversy')
     else:
-        award_names = OFFICIAL_AWARDS_1819
-    
-    filename = 'gg'+year+'.json'
-    tweets = json.load(open(filename))
-    
-    # print human-readeable form
-    print("Hosts: ",end='')
-    hosts = get_hosts(year)
-    for host in hosts:
-        print(host.title(),end=", ")
-    print()
-
-    presenters_dict = get_presenters(year)
-    nominees_dict = get_nominees(year)
-    winners_dict = get_winner(year)
-    for award in award_names:
-        print("\naward: ",award)
-        presenters = presenters_dict[award]
-        print("presenters: ",end="")
-        for p in presenters:
-            print(p,end=", ")
-
-        nominees = nominees_dict[award]
-        print("\nnominees: ",end="")
-        for n in nominees:
-            print(n,end=", ")
-
-        print("\nwinner: ", winners_dict[award])
+        print('Most controversial: ', controversial)
+    print('Most discussed: ', most_discussion)
     
     #json format
 
-    result = {}
-    result['host'] = hosts
-    award_dict={}
-    for award in award_names:
-        title_dict = {}
-        title_dict['presenters'] = presenters_dict[award]
-        title_dict['nominees'] = nominees_dict[award]
-        title_dict['winner'] = winners_dict[award]
-        award_dict[award] = title_dict
-    result['award_data'] = award_dict
-    # for key in award_dict.keys():
+    # result = {}
+    # result['host'] = hosts
+    # award_dict={}
+    # for award in award_names:
     #     title_dict = {}
-    print(result)
+    #     title_dict['presenters'] = presenters_dict[award]
+    #     title_dict['nominees'] = nominees_dict[award]
+    #     title_dict['winner'] = winners_dict[award]
+    #     award_dict[award] = title_dict
+    # result['award_data'] = award_dict
+    # # for key in award_dict.keys():
+    # #     title_dict = {}
+    # print(result)
     return
 
 if __name__ == '__main__':
