@@ -139,7 +139,13 @@ def main():
     for host in hosts:
         print(host,end=", ")
     print()
-
+    
+    print("generated awards: ",end='')
+    awards = get_awards(year)
+    for award in awards:
+        print(award,end=", ")
+    print()
+    
     presenters_dict = get_presenters(year)
     nominees_dict = get_nominees(year)
     winners_dict = get_winner(year)
