@@ -222,7 +222,7 @@ torchvision==0.4.2
 tornado==5.0.2
 tqdm==4.41.1
 traitlets==4.3.2
-Twisted==19.10.0
+Twisted==22.1.0
 twython==3.7.0
 typing==3.6.4
 unicodecsv==0.14.1
