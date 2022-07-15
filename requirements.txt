@@ -46,7 +46,7 @@ cytoolz==0.9.0.1
 dask==0.17.5
 datashape==0.5.4
 decorator==4.3.0
-distributed==1.21.8
+distributed==2021.10.0
 docutils==0.14
 -e git+https://github.com/facebookresearch/DrQA.git@96f343cac38346d451f6d144a1dfc9d7b4de3db0#egg=drqa
 elasticsearch==7.1.0
